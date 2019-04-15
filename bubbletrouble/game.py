@@ -40,6 +40,9 @@ class BubbleTroubleGame:
                     x, y = x + random.randint(-100, 100), y + random.randint(-100, 100)
                 size = ball['size']
                 speed = ball['speed']
+                for s in speed:
+                    if s < 0:
+                        raise ValueError('Object velocity must be non-negative')
                 self.balls.append(Ball(x, y, size, speed))
 
             for hexagon in level['hexagons']:
@@ -53,8 +56,9 @@ class BubbleTroubleGame:
                 if size < 1:
                     raise ValueError('Object size must be a positive integer.')
                 speed = hexagon['speed']
-                if speed < 0:
-                    raise  ValueError('Object velocity must be non-negative')
+                for s in speed:
+                    if s < 0:
+                        raise ValueError('Object velocity must be non-negative')
                 self.hexagons.append(Hexagon(x, y, size, speed))
 
         if timed:
