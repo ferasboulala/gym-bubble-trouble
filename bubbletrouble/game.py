@@ -152,7 +152,7 @@ class BubbleTroubleGame:
 
     def _set_timers(self):
         self._stop_timers()
-        self.timers = [Timer(t, self._tick, []) for t in range(1, self.time_left)]
+        self.timers = [Timer(t, self._tick, []) for t in range(0, self.time_left)]
         for timer in self.timers:
             timer.start()
 
