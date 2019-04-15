@@ -12,7 +12,7 @@ ACTION_FIRE = 2
 class BubbleTroubleEnv(gym.Env):
     metadata = {'render.modes': ['rgb_array']}
 
-    def __init__(self, rewards=None, rand=False):
+    def __init__(self, rewards=None, rand=False, timed=False):
         self.rewards = rewards
         if self.rewards is None:
             self.rewards = {'moving': 0, 'fire': 0, 'score': 1, 'death': -1, 'win': 1, 'step': 0}
@@ -21,6 +21,7 @@ class BubbleTroubleEnv(gym.Env):
         self.reward = None
         self.previous_score = BubbleTrouble.score()
         self.rand = rand
+        self.timed = timed
         self.seed()
 
     def step(self, action):
@@ -45,7 +46,7 @@ class BubbleTroubleEnv(gym.Env):
         return self.state, self.reward, done, {}
 
     def reset(self):
-        BubbleTrouble.game_start(self.rand)
+        BubbleTrouble.game_start(self.rand, timed=self.timed)
         BubbleTrouble.game_update(restart=False)
 
     def render(self, mode='rgb_array', *args, **kwargs):
