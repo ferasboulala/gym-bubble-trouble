@@ -36,8 +36,6 @@ class BubbleTroubleEnv(gym.Env):
         key = BubbleTrouble.key_map[action]
         BubbleTrouble.handle_key(key, True)
         BubbleTrouble.game_update(restart=False)
-        BubbleTrouble.handle_key(key, False)
-        BubbleTrouble.game_update(restart=False)
 
         self.state = None   # TODO : Add hand-picked states
 

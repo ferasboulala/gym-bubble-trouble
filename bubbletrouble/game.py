@@ -90,6 +90,7 @@ class BubbleTroubleGame:
         self.player.moving_left = direction == 1
 
     def fire_player(self):
+        self.move_player(0)
         self.player.shoot()
 
     def stop_player(self):
