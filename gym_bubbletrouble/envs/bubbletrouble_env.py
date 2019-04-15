@@ -53,7 +53,7 @@ class BubbleTroubleEnv(gym.Env):
     def render(self, mode='rgb_array', *args, **kwargs):
         assert mode == 'rgb_array'
         image = BubbleTrouble.surface_image()
-        return image.swapaxes(1, 2).transpose((2, 0, 1)
+        return image.swapaxes(1, 2).transpose((2, 0, 1))
 
     def seed(self, seed=time.time()):
         random.seed(seed)
