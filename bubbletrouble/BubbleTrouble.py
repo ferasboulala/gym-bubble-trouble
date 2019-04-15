@@ -37,9 +37,9 @@ def surface_image():
     return pygame.surfarray.array3d(surface)
 
 
-def game_start(rand=True):
+def game_start(rand=True, timed=True):
     game.restart()
-    game.load_level(level=1, rand=rand)
+    game.load_level(level=1, rand=rand, timed=timed)
 
 
 def game_update(restart=True):

@@ -21,7 +21,7 @@ class BubbleTroubleGame:
         self.level = level
         self.score = 0
 
-    def load_level(self, level=1, rand=True):
+    def load_level(self, level=1, rand=True, timed=True):
         self.__init__(level)
         self.player.set_position(WINDOWWIDTH / 2)
         self.player.is_alive = True
@@ -57,7 +57,8 @@ class BubbleTroubleGame:
                     raise  ValueError('Object velocity must be non-negative')
                 self.hexagons.append(Hexagon(x, y, size, speed))
 
-        self._set_timers()
+        if timed:
+            self._set_timers()
 
     def restart(self):
         self.exit_game()

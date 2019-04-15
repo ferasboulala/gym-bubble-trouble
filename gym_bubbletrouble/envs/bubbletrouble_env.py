@@ -19,7 +19,10 @@ ACTION_FIRE = 2
 class BubbleTroubleEnv(gym.Env):
     metadata = {'render.modes': ['rgb_array']}
 
-    def __init__(self, rand=False):
+    def __init__(self, rewards=None, rand=False):
+        self.rewards = rewards
+        if self.rewards is None:
+            self.rewards = {'moving': 0, 'fire': 0, 'score': 1, 'death': -1, 'win': 1}
         self.action_space = gym.spaces.Discrete(3)
         self.state = None
         self.reward = None
@@ -63,18 +66,17 @@ class BubbleTroubleEnv(gym.Env):
     def close(self):
         BubbleTrouble.quit_game()
 
-    @staticmethod
-    def _f(action, dead, win, score_change):
+    def _f(self, action, dead, win, score_change):
         fitness = 0
-        if action != ACTION_FIRE:
-            fitness += REWARD_MOVING
+        if action == ACTION_FIRE:
+            fitness += self.rewards['fire']
         else:
-            fitness += REWARD_FIRE
+            fitness += self.rewards['moving']
         if dead:
-            fitness += REWARD_DEATH
+            fitness += self.rewards['death']
         if win:
-            fitness += REWARD_WIN
+            fitness += self.rewards['win']
         if score_change:
-            fitness += REWARD_SCORE
+            fitness += self.rewards['score']
 
         return fitness
