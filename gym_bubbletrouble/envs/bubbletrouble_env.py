@@ -4,13 +4,6 @@ import random
 import time
 
 
-REWARD_MOVING = 0
-REWARD_FIRE = 0
-REWARD_SCORE = 1
-REWARD_DEATH = -1
-REWARD_WIN = 1
-
-
 ACTION_LEFT = 0
 ACTION_RIGHT = 1
 ACTION_FIRE = 2
@@ -22,7 +15,7 @@ class BubbleTroubleEnv(gym.Env):
     def __init__(self, rewards=None, rand=False):
         self.rewards = rewards
         if self.rewards is None:
-            self.rewards = {'moving': 0, 'fire': 0, 'score': 1, 'death': -1, 'win': 1}
+            self.rewards = {'moving': 0, 'fire': 0, 'score': 1, 'death': -1, 'win': 1, 'step': 0}
         self.action_space = gym.spaces.Discrete(3)
         self.state = None
         self.reward = None
@@ -67,7 +60,7 @@ class BubbleTroubleEnv(gym.Env):
         BubbleTrouble.quit_game()
 
     def _f(self, action, dead, win, score_change):
-        fitness = 0
+        fitness = self.rewards['step']
         if action == ACTION_FIRE:
             fitness += self.rewards['fire']
         else:
