@@ -8,6 +8,11 @@ ACTION_LEFT = 0
 ACTION_RIGHT = 1
 ACTION_FIRE = 2
 
+# Limiting through steps instead of time
+T_LIMIT = 30
+FPS = 30
+MAX_N_STEPS = FPS * T_LIMIT
+
 
 class BubbleTroubleEnv(gym.Env):
     metadata = {'render.modes': ['rgb_array']}
@@ -22,6 +27,7 @@ class BubbleTroubleEnv(gym.Env):
         self.previous_score = None
         self.rand = rand
         self.timed = timed
+        self.n_steps = 0
         self.seed()
 
     def step(self, action):
@@ -39,14 +45,16 @@ class BubbleTroubleEnv(gym.Env):
         destroyed_object = self.previous_score != BubbleTrouble.score()
         self.previous_score = BubbleTrouble.score()
 
-        done = BubbleTrouble.is_over()
+        self.n_steps += 1
+        done = BubbleTrouble.is_over() or (self.n_steps >= MAX_N_STEPS and self.timed)
 
         self.reward = self._f(action, done, win, destroyed_object)
 
         return self.state, self.reward, done, {}
 
     def reset(self):
-        BubbleTrouble.game_start(self.rand, timed=self.timed)
+        self.n_steps = 0
+        BubbleTrouble.game_start(self.rand, False)
         BubbleTrouble.game_update(restart=False)
         self.previous_score = BubbleTrouble.score()
 
