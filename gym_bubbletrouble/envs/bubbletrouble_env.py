@@ -9,7 +9,7 @@ ACTION_RIGHT = 1
 ACTION_FIRE = 2
 
 # Limiting through steps instead of time
-T_LIMIT = 30
+T_LIMIT = 45
 FPS = 30
 MAX_N_STEPS = FPS * T_LIMIT
 
