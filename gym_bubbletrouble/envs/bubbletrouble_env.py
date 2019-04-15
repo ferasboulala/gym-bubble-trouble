@@ -19,7 +19,7 @@ class BubbleTroubleEnv(gym.Env):
         self.action_space = gym.spaces.Discrete(3)
         self.state = None
         self.reward = None
-        self.previous_score = BubbleTrouble.score()
+        self.previous_score = None
         self.rand = rand
         self.timed = timed
         self.seed()
@@ -48,6 +48,7 @@ class BubbleTroubleEnv(gym.Env):
     def reset(self):
         BubbleTrouble.game_start(self.rand, timed=self.timed)
         BubbleTrouble.game_update(restart=False)
+        self.previous_score = BubbleTrouble.score()
 
     def render(self, mode='rgb_array', *args, **kwargs):
         assert mode == 'rgb_array'
