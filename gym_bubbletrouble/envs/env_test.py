@@ -26,7 +26,7 @@ def test_rendering(env):
             img = env.render()
             cv.imshow('Rendering test', img)
             if reward != 0:
-                print(reward, done)
+                print('Got a ball!')
             cv.waitKey(33)
     cv.destroyAllWindows()
 

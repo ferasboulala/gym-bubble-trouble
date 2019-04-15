@@ -17,7 +17,7 @@ MAX_N_STEPS = FPS * T_LIMIT
 class BubbleTroubleEnv(gym.Env):
     metadata = {'render.modes': ['rgb_array']}
 
-    def __init__(self, rewards=None, rand=False, timed=False):
+    def __init__(self, rewards=None, rand=True, timed=False):
         self.rewards = rewards
         if self.rewards is None:
             self.rewards = {'moving': 0, 'fire': 0, 'score': 1, 'death': -1, 'win': 1, 'step': 0}
