@@ -7,7 +7,7 @@ A gym environment for RL of the bubble trouble game. `bubbletrouble` contains th
 
 ## To play
 3. `$ cd bubbletrouble`
-4. `$ python bubbletrouble.py`
+4. `$ python BubbleTrouble.py`
 
 ## Levels
 Levels can be edited from the `levels.json` description file. The game will start with the specified amount of objects
