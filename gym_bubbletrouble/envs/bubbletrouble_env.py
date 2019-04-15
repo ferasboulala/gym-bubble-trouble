@@ -30,7 +30,7 @@ class BubbleTroubleEnv(gym.Env):
     def step(self, action):
         assert self.action_space.contains(action), '%r (%s) invalid' % (action, type(action))
 
-        key = BubbleTrouble.key_map(action)
+        key = BubbleTrouble.key_map[action]
         BubbleTrouble.handle_key(key, True)
         BubbleTrouble.game_update(restart=False)
         BubbleTrouble.handle_key(key, False)
