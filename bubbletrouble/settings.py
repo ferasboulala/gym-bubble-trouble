@@ -1,0 +1,16 @@
+import os
+
+WINDOWWIDTH = 640
+WINDOWHEIGHT = 480
+FPS = 30
+WEAPON_SPEED = 15
+PLAYER_SPEED = 5
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+PURPLE = (100, 25, 180)
+BLUE = (0, 0, 200)
+BLACK = (0, 0, 0)
+GRAVITY = 1
+STARTING_LIVES = 1
+APP_PATH = os.path.dirname(__file__) + '/'
+IMAGES_PATH = APP_PATH + 'images/'
