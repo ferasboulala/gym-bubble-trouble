@@ -91,6 +91,7 @@ class BubbleTroubleEnv(gym.Env):
         game = BubbleTrouble.game
         player = game.player
         c_x = player.position() / WINDOWWIDTH
+        t = self.n_steps / MAX_N_STEPS
         shoot = player.can_shoot()
 
         objects_states = [0, 0, 0, 0, 0] * self.K
@@ -108,7 +109,8 @@ class BubbleTroubleEnv(gym.Env):
                 obj.speed[1] / WINDOWHEIGHT
             ]
 
-        return np.array([c_x, shoot] + objects_states)
+        # [ time_left, character_position, shoot, k * [size, pos_x, pos_y, v_x, v_y] ]
+        return np.array([t, c_x, shoot] + objects_states)
 
     @staticmethod
     def euclidean_distance_squared(p1, p2):
