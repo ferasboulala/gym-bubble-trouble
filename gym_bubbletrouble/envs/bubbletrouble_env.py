@@ -24,7 +24,7 @@ class BubbleTroubleEnv(gym.Env):
         self.rewards = rewards
         if self.rewards is None:
             self.rewards = {'moving': 0, 'fire': 0, 'score': 1, 'death': -1, 'win': 1, 'step': 0}
-        self.action_space = gym.spaces.Discrete(3)
+        self.action_space = gym.spaces.Discrete(4)
         self.state = None
         self.reward = None
         self.previous_score = None
