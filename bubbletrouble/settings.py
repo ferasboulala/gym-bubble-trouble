@@ -15,3 +15,4 @@ GRAVITY = 1
 STARTING_LIVES = 1
 APP_PATH = os.path.dirname(__file__) + '/'
 IMAGES_PATH = APP_PATH + 'images/'
+MAX_BALL_SIZE = 5

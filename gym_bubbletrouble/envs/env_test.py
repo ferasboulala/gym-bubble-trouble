@@ -9,10 +9,13 @@ sys.path.append('../../bubbletrouble')
 
 def test_step(env):
     env.reset()
-    for _ in range(100):
+    for i in range(100):
         state, reward, done, _ = env.step(random.randint(0, 2))
         if done:
             env.reset()
+        if not i % 10:
+            print('Step {}'.format(i))
+            print(state, reward, done)
 
 
 def test_rendering(env):

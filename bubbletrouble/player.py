@@ -39,3 +39,9 @@ class Player(pygame.sprite.Sprite):
 
     def stop_moving(self):
         self.moving_left = self.moving_right = False
+
+    def position(self):
+        return self.rect.centerx
+
+    def can_shoot(self):
+        return ~self.weapon.is_active

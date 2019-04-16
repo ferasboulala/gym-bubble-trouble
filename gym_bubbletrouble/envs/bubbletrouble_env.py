@@ -1,5 +1,8 @@
 import gym
 import BubbleTrouble
+from settings import *
+import numpy as np
+
 import random
 import time
 
@@ -10,14 +13,13 @@ ACTION_FIRE = 2
 
 # Limiting through steps instead of time
 T_LIMIT = 45
-FPS = 30
 MAX_N_STEPS = FPS * T_LIMIT
 
 
 class BubbleTroubleEnv(gym.Env):
     metadata = {'render.modes': ['rgb_array']}
 
-    def __init__(self, rewards=None, rand=True, timed=False):
+    def __init__(self, K=5, rewards=None, rand=True, timed=False):
         self.rewards = rewards
         if self.rewards is None:
             self.rewards = {'moving': 0, 'fire': 0, 'score': 1, 'death': -1, 'win': 1, 'step': 0}
@@ -27,6 +29,7 @@ class BubbleTroubleEnv(gym.Env):
         self.previous_score = None
         self.rand = rand
         self.timed = timed
+        self.K = K
         self.n_steps = 0
         self.seed()
 
@@ -37,7 +40,7 @@ class BubbleTroubleEnv(gym.Env):
         BubbleTrouble.handle_key(key, True)
         BubbleTrouble.game_update(restart=False)
 
-        self.state = None   # TODO : Add hand-picked states
+        self.state = self.extract_state()
 
         win = BubbleTrouble.is_completed()
         destroyed_object = self.previous_score != BubbleTrouble.score()
@@ -81,3 +84,31 @@ class BubbleTroubleEnv(gym.Env):
             fitness += self.rewards['score']
 
         return fitness
+
+    def extract_state(self):
+        # The BubbleTrouble module does not have control over player. Must get it directly.
+        game = BubbleTrouble.game
+        player = game.player
+        c_x = player.position() / WINDOWWIDTH
+        shoot = player.can_shoot()
+
+        objects_states = [0, 0, 0, 0, 0] * self.K
+        objects = game.balls + game.hexagons
+        objects.sort(key=lambda obj: self.euclidean_distance_squared(obj.position(), (c_x, WINDOWHEIGHT)))
+
+        for i, obj in enumerate(objects):
+            if i > self.K:
+                break
+            objects_states[i:i+5] = [
+                obj.size / MAX_BALL_SIZE,
+                obj.position()[0] / WINDOWWIDTH,
+                obj.position()[1] / WINDOWHEIGHT,
+                obj.speed[0] / WINDOWWIDTH,
+                obj.speed[1] / WINDOWHEIGHT
+            ]
+
+        return np.array([c_x, shoot] + objects_states)
+
+    @staticmethod
+    def euclidean_distance_squared(p1, p2):
+        return (p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2

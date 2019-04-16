@@ -27,6 +27,9 @@ class Bubble(pygame.sprite.Sprite):
     def _clip(val, min_value, max_value):
         return min(max(val, min_value), max_value)
 
+    def position(self):
+        return self.rect.centerx, self.rect.centery
+
 
 class Ball(Bubble):
     def __init__(self, x, y, size, speed):

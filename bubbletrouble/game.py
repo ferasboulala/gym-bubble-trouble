@@ -39,6 +39,8 @@ class BubbleTroubleGame:
                 if rand:
                     x, y = x + random.randint(-100, 100), y + random.randint(-100, 100)
                 size = ball['size']
+                if size > MAX_BALL_SIZE:
+                    raise ValueError('Ball cannot exceed {}'.format(MAX_BALL_SIZE))
                 speed = ball['speed']
                 for s in speed:
                     if s < 0:
@@ -53,6 +55,8 @@ class BubbleTroubleGame:
                 if rand:
                     x, y = x + random.randint(-100, 100), y + random.randint(-100, 100)
                 size = hexagon['size']
+                if size > MAX_BALL_SIZE:
+                    raise ValueError('Ball cannot exceed {}'.format(MAX_BALL_SIZE))
                 if size < 1:
                     raise ValueError('Object size must be a positive integer.')
                 speed = hexagon['speed']
