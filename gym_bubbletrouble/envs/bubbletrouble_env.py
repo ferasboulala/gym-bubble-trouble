@@ -48,7 +48,7 @@ class BubbleTroubleEnv(gym.Env):
         self.previous_score = BubbleTrouble.score()
 
         self.n_steps += 1
-        done = BubbleTrouble.is_over() or (self.n_steps >= MAX_N_STEPS and self.timed)
+        done = BubbleTrouble.is_over() or (self.n_steps >= MAX_N_STEPS and self.timed) or win
 
         self.reward = self._f(action, done, win, destroyed_object)
 
