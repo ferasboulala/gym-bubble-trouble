@@ -2,6 +2,7 @@ import gym
 import BubbleTrouble
 from settings import *
 import numpy as np
+import cv2 as cv
 
 import random
 import time
@@ -96,12 +97,12 @@ class BubbleTroubleEnv(gym.Env):
 
         objects_states = [0, 0, 0, 0, 0] * self.K
         objects = game.balls + game.hexagons
-        objects.sort(key=lambda obj: self.euclidean_distance_squared(obj.position(), (c_x, WINDOWHEIGHT)))
+        objects.sort(key=lambda obj: self.euclidean_distance_squared(obj.position(), (c_x, WINDOWHEIGHT)), reverse=True)
 
         for i, obj in enumerate(objects):
             if i > self.K:
                 break
-            objects_states[i:i+5] = [
+            objects_states[i*5:i*5+5] = [
                 obj.size / MAX_BALL_SIZE,
                 obj.position()[0] / WINDOWWIDTH,
                 obj.position()[1] / WINDOWHEIGHT,
@@ -109,9 +110,24 @@ class BubbleTroubleEnv(gym.Env):
                 obj.speed[1] / WINDOWHEIGHT
             ]
 
-        # [ time_left, character_position, shoot, k * [size, pos_x, pos_y, v_x, v_y] ]
         return np.array([t, c_x, shoot] + objects_states)
 
     @staticmethod
     def euclidean_distance_squared(p1, p2):
         return (p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2
+
+    def render_with_states(self):
+        img = np.ascontiguousarray(self.render(), dtype=np.uint8)
+        _, _, _, *balls = self.extract_state()
+
+        for i in range(self.K):
+            size, x, y, _, _ = balls[i*5:i*5+5]
+            if size == 0:
+                break
+            d = size * MAX_BALL_SIZE * SIZE_TO_PIXELS
+            img = cv.rectangle(img,
+                               (int(x * WINDOWWIDTH - d/2), int(y * WINDOWHEIGHT - d/2)),
+                               (int(x * WINDOWWIDTH + d/2), int(y * WINDOWHEIGHT + d/2)),
+                               GREEN, 3)
+
+        return img

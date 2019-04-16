@@ -44,4 +44,4 @@ class Player(pygame.sprite.Sprite):
         return self.rect.centerx
 
     def can_shoot(self):
-        return ~self.weapon.is_active
+        return not self.weapon.is_active

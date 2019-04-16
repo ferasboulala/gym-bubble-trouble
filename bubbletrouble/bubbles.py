@@ -7,7 +7,7 @@ class Bubble(pygame.sprite.Sprite):
     def __init__(self, x, y, size, speed, image_name):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(IMAGES_PATH + image_name)
-        self.image = pygame.transform.scale(self.image, (size*15, size*15))
+        self.image = pygame.transform.scale(self.image, (size*SIZE_TO_PIXELS, size*SIZE_TO_PIXELS))
         self.rect = self.image.get_rect(centerx=x, centery=y)
         self.size = size
         self.speed = speed

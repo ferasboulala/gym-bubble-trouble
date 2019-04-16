@@ -21,12 +21,12 @@ def test_step(env):
 def test_rendering(env):
     cv.namedWindow('Rendering test')
     env.reset()
-    for _ in range(100):
-        _, reward, done, _ = env.step(random.randint(0, 2))
+    for _ in range(200):
+        _, reward, done, _ = env.step(random.randint(0, 3))
         if done:
             env.reset()
         else:
-            img = env.render()
+            img = env.render_with_states()
             cv.imshow('Rendering test', img)
             if reward != 0:
                 print('Got a ball!')
