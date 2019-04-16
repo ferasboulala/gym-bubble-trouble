@@ -11,7 +11,7 @@ font = pygame.font.SysFont('monospace', 30)
 game = BubbleTroubleGame()
 exit_game = False
 screen = None
-key_map = {0: K_LEFT, 1: K_RIGHT, 2: K_SPACE, 3: QUIT}
+key_map = {0: K_LEFT, 1: K_RIGHT, 2: K_SPACE, 3: None}
 
 
 def setup():
@@ -129,6 +129,8 @@ def handle_key(key, down):
             game.move_player(direction=-1)
         elif key == K_SPACE:
             game.fire_player()
+        elif key is None:
+            game.stop_player()  # Do nothing
     else:
         if key == K_LEFT or key == K_RIGHT:
             game.stop_player()

@@ -10,6 +10,7 @@ import time
 ACTION_LEFT = 0
 ACTION_RIGHT = 1
 ACTION_FIRE = 2
+ACTION_IDLE = 3
 
 # Limiting through steps instead of time
 T_LIMIT = 45
