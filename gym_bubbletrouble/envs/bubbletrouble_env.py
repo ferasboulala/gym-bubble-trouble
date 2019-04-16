@@ -100,7 +100,7 @@ class BubbleTroubleEnv(gym.Env):
         objects.sort(key=lambda obj: self.euclidean_distance_squared(obj.position(), (c_x, WINDOWHEIGHT)), reverse=True)
 
         for i, obj in enumerate(objects):
-            if i > self.K:
+            if i == self.K:
                 break
             objects_states[i*5:i*5+5] = [
                 obj.size / MAX_BALL_SIZE,
