@@ -8,6 +8,8 @@ from bubbles import Ball, Hexagon
 from player import Player
 from settings import *
 
+RAND_SHIFT = 200
+
 
 class BubbleTroubleGame:
     def __init__(self, level=1):
@@ -37,7 +39,7 @@ class BubbleTroubleGame:
                     raise ValueError('Object coordinates should be set between 0 and 1')
                 x, y = x * WINDOWWIDTH, y * WINDOWHEIGHT
                 if rand:
-                    x, y = x + random.randint(-100, 100), y + random.randint(-100, 100)
+                    x, y = x + random.randint(-RAND_SHIFT, RAND_SHIFT), y + random.randint(-RAND_SHIFT, RAND_SHIFT)
                 size = ball['size']
                 if size > MAX_BALL_SIZE:
                     raise ValueError('Ball cannot exceed {}'.format(MAX_BALL_SIZE))
@@ -53,7 +55,7 @@ class BubbleTroubleGame:
                     raise ValueError('Object coordinates should be set between 0 and 1')
                 x, y = x * WINDOWWIDTH, y * WINDOWHEIGHT
                 if rand:
-                    x, y = x + random.randint(-100, 100), y + random.randint(-100, 100)
+                    x, y = x + random.randint(-RAND_SHIFT, RAND_SHIFT), y + random.randint(-RAND_SHIFT, RAND_SHIFT)
                 size = hexagon['size']
                 if size > MAX_BALL_SIZE:
                     raise ValueError('Ball cannot exceed {}'.format(MAX_BALL_SIZE))
