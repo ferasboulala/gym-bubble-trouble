@@ -21,7 +21,7 @@ def test_step(env):
 def test_rendering(env):
     cv.namedWindow('Rendering test')
     env.reset()
-    for _ in range(200):
+    for _ in range(300):
         _, reward, done, _ = env.step(random.randint(0, 3))
         if done:
             env.reset()
