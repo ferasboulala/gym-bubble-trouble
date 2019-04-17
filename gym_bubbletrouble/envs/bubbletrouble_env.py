@@ -97,7 +97,8 @@ class BubbleTroubleEnv(gym.Env):
 
         objects_states = [0, 0, 0, 0, 0] * self.K
         objects = game.balls + game.hexagons
-        objects.sort(key=lambda obj: self.euclidean_distance_squared(obj.position(), (c_x, WINDOWHEIGHT)), reverse=True)
+        objects.sort(key=lambda obj: self.euclidean_distance_squared(obj.position(),
+                                                                     (player.position(), WINDOWHEIGHT)), reverse=True)
 
         for i, obj in enumerate(objects):
             if i == self.K:
