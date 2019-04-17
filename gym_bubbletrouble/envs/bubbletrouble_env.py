@@ -99,6 +99,7 @@ class BubbleTroubleEnv(gym.Env):
         objects = game.balls + game.hexagons
         objects.sort(key=lambda obj: self.euclidean_distance_squared(obj.position(),
                                                                      (player.position(), WINDOWHEIGHT)))
+        n = len(objects) / MAX_BALLS_AT_ALL_TIME
 
         for i, obj in enumerate(objects):
             if i == self.K:
@@ -111,7 +112,7 @@ class BubbleTroubleEnv(gym.Env):
                 obj.speed[1] / WINDOWHEIGHT
             ]
 
-        return np.array([t, c_x, shoot] + objects_states)
+        return np.array([n, t, c_x, shoot] + objects_states)
 
     @staticmethod
     def euclidean_distance_squared(p1, p2):
@@ -119,7 +120,7 @@ class BubbleTroubleEnv(gym.Env):
 
     def render_with_states(self):
         img = np.ascontiguousarray(self.render(), dtype=np.uint8)
-        _, _, _, *balls = self.extract_state()
+        _, _, _, _, *balls = self.extract_state()
 
         for i in range(self.K):
             size, x, y, _, _ = balls[i*5:i*5+5]
