@@ -13,7 +13,6 @@ ACTION_RIGHT = 1
 ACTION_FIRE = 2
 ACTION_IDLE = 3
 
-# Limiting through steps instead of time
 T_LIMIT = 45
 MAX_N_STEPS = FPS * T_LIMIT
 
@@ -88,7 +87,6 @@ class BubbleTroubleEnv(gym.Env):
         return fitness
 
     def extract_state(self):
-        # The BubbleTrouble module does not have control over player. Must get it directly.
         game = BubbleTrouble.game
         player = game.player
         c_x = player.position() / WINDOWWIDTH
@@ -120,16 +118,16 @@ class BubbleTroubleEnv(gym.Env):
 
     def render_with_states(self):
         img = np.ascontiguousarray(self.render(), dtype=np.uint8)
-        _, _, _, _, *balls = self.extract_state()
+        _, _, c_x, _, *balls = self.extract_state()
 
         for i in range(self.K):
             size, x, y, _, _ = balls[i*5:i*5+5]
+            x, y = x * WINDOWWIDTH, y * WINDOWHEIGHT
             if size == 0:
                 break
             d = size * MAX_BALL_SIZE * SIZE_TO_PIXELS
-            img = cv.rectangle(img,
-                               (int(x * WINDOWWIDTH - d/2), int(y * WINDOWHEIGHT - d/2)),
-                               (int(x * WINDOWWIDTH + d/2), int(y * WINDOWHEIGHT + d/2)),
-                               GREEN, 3)
+            p1, p2 = (int(x - d/2), int(y - d/2)), (int(x + d/2), int(y + d/2))
+            img = cv.rectangle(img, p1, p2, GREEN, 2)
+            img = cv.line(img, (int(x), int(y)), (int(c_x * WINDOWWIDTH), WINDOWHEIGHT), GREEN, 2)
 
         return img
