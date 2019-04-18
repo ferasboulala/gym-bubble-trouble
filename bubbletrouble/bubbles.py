@@ -31,10 +31,6 @@ class Bubble(pygame.sprite.Sprite):
     def position(self):
         return self.rect.centerx, self.rect.centery
 
-    @property
-    def speed(self):
-        return self.speed
-
 
 class Ball(Bubble):
     def __init__(self, x, y, size, speed):
