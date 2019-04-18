@@ -76,7 +76,7 @@ class BubbleTroubleEnv(gym.Env):
         fitness = self.rewards['step']
         if action == ACTION_FIRE:
             fitness += self.rewards['fire']
-        else:
+        elif action != ACTION_IDLE:
             fitness += self.rewards['moving']
         if dead:
             fitness += self.rewards['death']
