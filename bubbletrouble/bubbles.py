@@ -35,10 +35,6 @@ class Bubble(pygame.sprite.Sprite):
     def speed(self):
         return self.speed
 
-    @speed.setter
-    def speed(self, speed):
-        self.speed = speed
-
 
 class Ball(Bubble):
     def __init__(self, x, y, size, speed):
