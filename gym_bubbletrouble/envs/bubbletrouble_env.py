@@ -128,6 +128,6 @@ class BubbleTroubleEnv(gym.Env):
             d = size * MAX_BALL_SIZE * SIZE_TO_PIXELS
             p1, p2 = (int(x - d/2), int(y - d/2)), (int(x + d/2), int(y + d/2))
             img = cv.rectangle(img, p1, p2, GREEN, 2)
-            img = cv.line(img, (int(x), int(y)), (int(c_x * WINDOWWIDTH), WINDOWHEIGHT), GREEN, 2)
+            img = cv.line(img, (int(x), int(y)), (int(c_x * WINDOWWIDTH), WINDOWHEIGHT), GREEN, 1)
 
         return img

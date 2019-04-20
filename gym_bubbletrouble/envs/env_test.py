@@ -22,14 +22,15 @@ def test_rendering(env):
     cv.namedWindow('Rendering test')
     env.reset()
     for _ in range(300):
-        _, reward, done, _ = env.step(random.randint(0, 3))
+        state, reward, done, _ = env.step(random.randint(0, 3))
+        if reward != 0:
+            print(reward)
+            print(state)
         if done:
             env.reset()
         else:
             img = env.render_with_states()
             cv.imshow('Rendering test', img)
-            if reward != 0:
-                print('Got a ball!')
             cv.waitKey(33)
     cv.destroyAllWindows()
 
